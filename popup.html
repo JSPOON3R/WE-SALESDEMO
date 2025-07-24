@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merged Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    :root {
+      --bg-dark: #0b0b0b;
+      --bg-green: #1f3c30;
+      --bg-blue: #0a205e;
+      --accent-green: #27d69c;
+      --accent-green-dark: #0ca67a;
+      --text-primary: #f7f7f7;
+      --log-bg: #101820;
+      --log-border: #27d69c;
+      --log-shadow: rgba(0, 0, 0, 0.3);
+      --log-font: monospace;
+      --btn-radius: 50vw;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to top left, var(--bg-green), var(--bg-dark), var(--bg-blue));
+      background-size: 120% 120%;
+      animation: gradientBreathing 5s infinite ease-in-out alternate;
+      color: var(--text-primary);
+    }
+
+    @keyframes gradientBreathing {
+      0% {
+        background-position: 50% 50%;
+      }
+
+      50% {
+        background-position: 100% 0%;
+      }
+
+      100% {
+        background-position: 50% 50%;
+      }
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .topBar {
+      padding: 0.4rem 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .top-button,
+    .button-color {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--btn-radius);
+      background-image: linear-gradient(144deg, var(--accent-green), var(--accent-green-dark));
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .top-button:hover,
+    .button-color:hover {
+      opacity: 0.85;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 600px;
+      margin: 1rem auto;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    input[type="text"] {
+    align-self: center;
+    height: 1em;
+    width: 100%;
+    padding: 0.3rem .5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: .8rem;
+    outline: 1px solid  var(--bg-blue);
+    background-color: transparent;
+    color: #f7f7f7;
+    }
+
+    input::placeholder {
+      color: #f7f7f7;
+      opacity: 0.2;
+      padding-left: .5em;
+    }
+
+    #magic-link-display {
+      opacity: .2;
+    }
+
+    #logContainer {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background-color: var(--log-bg);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .log-entry {
+      background-color: rgba(255, 255, 255, 0.02);
+      border-left: 4px solid var(--log-border);
+      margin-bottom: 0.75rem;
+      padding: 1rem;
+      border-radius: 12px;
+      font-family: var(--log-font);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      box-shadow: 0 1px 4px var(--log-shadow);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: background-color 0.3s;
+    }
+
+    .log-entry:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+          <input type="text" placeholder="Enter URL..." id="urlInput" />
+    <div class="topBar">
+      <button class="top-button" id="XYToggle">Toggle XY</button>
+      <button class="top-button" id="showTranscript">Toggle Transcript</button>
+    </div>
+    <div class="topBar">
+      <button class="top-button" id="generateLinkBtn">Generate Magic Link</button>
+      <button class="top-button" id="magic-link-display">Copy</button>
+    </div>              
+
+    <div id="logContainer"></div>
+  </div>
+
+  <script>
+    let backgroundScriptMessage = {
+      action: "magic-link-request",
+      newTabLink: "https://demo.wpeverest.com/user-registration/health-insurance-application-form/",
+      sessionId: "",
+      spaceId: "",
+      spaceUrl: ""
+    };
+    let magicLink = "";
+
+    async function getSession() {
+      chrome.webfuseSession.getSessionInfo();
+    }
+
+    document.getElementById("generateLinkBtn").addEventListener("click", () => {
+      getSession();
+      backgroundScriptMessage.newTabLink = "https://demo.wpeverest.com/user-registration/health-insurance-application-form/";
+      const inputElement = document.getElementById("urlInput");
+      const input = inputElement.value.trim();
+
+      if (input) {
+        backgroundScriptMessage.newTabLink = input;
+        console.log("Saved newTabLink:", backgroundScriptMessage.newTabLink);
+        inputElement.value = "";
+      } else {
+        console.log("Input empty, using original newTabLink:", backgroundScriptMessage.newTabLink);
+      }
+    });
+
+    chrome.webfuseSession.onMessage.addListener(message => {
+      if (message.msg === "get_session_info") {
+        console.log("sessionInfo: ", message.sessionInfo);
+        backgroundScriptMessage.sessionId = message.sessionInfo.sessionId;
+        backgroundScriptMessage.spaceId = message.sessionInfo.space.id;
+        backgroundScriptMessage.spaceUrl = message.sessionInfo.space.link;
+        browser.runtime.sendMessage(backgroundScriptMessage);
+        console.log("message sent to background script");
+      }
+    });
+
+    function copyToClipboard(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+
+      textarea.select();
+      try {
+        const successful = document.execCommand("copy");
+        console.log(successful ? "Magic link copied to clipboard!" : "Copy failed");
+      } catch (err) {
+        console.error("Failed to copy magic link: ", err);
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+    browser.runtime.onMessage.addListener((message) => {
+      console.log("from extension... ", message);
+
+      if (message.action === "magic-link-ready") {
+        magicLink = message.magicLink.link;
+        console.log("Magic link from background script: ", magicLink);
+
+        const linkButton = document.getElementById("magic-link-display");
+
+        if (linkButton) {
+          linkButton.style.opacity = 1;
+
+          linkButton.addEventListener("click", () => {
+            copyToClipboard(magicLink);
+          });
+        } else {
+          console.warn("Element #magic-link-display not found.");
+        }
+      }
+    });
+
+    function addLogEntry(message) {
+      const logContainer = document.getElementById('logContainer');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.textContent = JSON.stringify(message, null, 2);
+      logContainer.appendChild(entry);
+    }
+
+    browser.webfuseSession.onMessage.addListener((msg) => {
+      if (msg.event_type !== 'user_activity' && msg.msg !== "get_session_participants") {
+        console.log('popup_event_detected:', msg);
+        addLogEntry(msg);
+      }
+    });
+
+    document.getElementById("XYToggle").addEventListener("click", function () {
+      const message = { action: "toggleXY" };
+      console.log("button clicked in pop up. Sending message... ", message);
+      browser.tabs.sendMessage(null, message);
+      addLogEntry(message);
+    });
+  </script>
+
+  <script>
+    const CONFIG = {
+      name: 'User',
+      clientIndex: 0,
+    };
+
+    let recognition;
+    let isListening = false;
+
+    function initSpeechRecognition() {
+      recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      let lastText = '';
+      let startTime = '';
+
+      recognition.onstart = () => {
+        console.log('Speech recognition started');
+      };
+
+      recognition.onresult = (event) => {
+        const current = event.resultIndex;
+        const transcript = event.results[current][0].transcript.trim();
+
+        if (event.results[current].isFinal && transcript.length > 0) {
+          const payload = {
+            start_time: startTime,
+            end_time: Date.now().toString(),
+            client_index: CONFIG.clientIndex,
+            name: CONFIG.name,
+            text: transcript,
+            type: 'transcript'
+          };
+          browser.tabs.sendMessage(null, { action: "transcript", payload });
+          lastText = '';
+        } else {
+          if (!lastText) {
+            startTime = Date.now().toString();
+          }
+          lastText = transcript;
+        }
+      };
+
+      recognition.onend = () => {
+        isListening = false;
+        if (CONFIG.transcriptEnabled) {
+          console.log('Restarting speech recognition');
+          setTimeout(() => {
+            recognition.start();
+          }, 2000);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (CONFIG.transcriptEnabled) {
+          console.log('Restarting speech recognition');
+          setTimeout(() => {
+            recognition.start();
+          }, 2000);
+        }
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      CONFIG.transcriptEnabled = false;
+
+      document.getElementById("showTranscript").addEventListener("click", () => {
+        CONFIG.transcriptEnabled = !CONFIG.transcriptEnabled;
+
+        if (CONFIG.transcriptEnabled) {
+          console.log("Transcript listening enabled");
+          if (!isListening && recognition) {
+            recognition.start();
+            isListening = true;
+          }
+        } else {
+          console.log("Transcript listening disabled");
+          if (recognition && isListening) {
+            recognition.stop();
+            isListening = false;
+          }
+        }
+      });
+
+      function init() {
+        let handlerAdded = false;
+        chrome.webfuseSession.onMessage.addListener(message => {
+          if (message?.msg === 'get_session_participants' && !handlerAdded) {
+            const me = message.participants.find(participant => !!participant.self);
+            handlerAdded = true;
+            CONFIG.clientIndex = me.client_index;
+            CONFIG.name = me.name;
+            initSpeechRecognition();
+          }
+        });
+
+        chrome.webfuseSession.apiRequest({ cmd: 'get_session_participants' });
+      }
+
+      setTimeout(init, 1000);
+    });
+  </script>
+</body>
+
+</html>

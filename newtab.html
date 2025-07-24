@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png"
+        href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
+    <title>Custom Startpage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color--background-primary: var(--base-color-brand--dark);
+            --background-color--dark-blue: #0a205e;
+            --background-color--dark-green: #1f3c30;
+            --base-color-brand--off-white: #f7f7f7;
+            --base-color-brand--light-gray: silver;
+            --link-color--link-alternate: var(--base-color-brand--off-white);
+            --radius--radius-main: 1rem;
+            --base-color-brand--blue: #3d93ef;
+            --base-color-brand--light-blue: #aed2f8;
+            --base-color-brand--purple: #4d65ff;
+            --base-color-brand--dark: #0b0b0b;
+            --base-color-neutral--black: black;
+            --base-color-neutral--white: white;
+            --radius--radius-round: 100vw;
+            --text-color--text-alternate: var(--base-color-brand--dark);
+            --text-color--text-error: var(--base-color-system--error-red);
+            --base-color-brand--surfly-red: #e54747;
+            --base-color-brand--anti-flash-white: #ececec;
+            --background-color--background-alternate: var(--base-color-brand--off-white);
+            --link-color--link-primary: var(--base-color-brand--dark);
+            --text-color--text-primary: var(--base-color-brand--off-white);
+            --radius--radius-small: .5rem;
+            --base-color-neutral--neutral-lighter: #ccc;
+            --base-color-neutral--neutral-lightest: #eee;
+            --base-color-neutral--neutral-light: #aaa;
+            --base-color-neutral--neutral: #666;
+            --base-color-neutral--neutral-dark: #444;
+            --base-color-neutral--neutral-darker: #222;
+            --base-color-neutral--neutral-darkest: #111;
+            --base-color-system--success-green: #027a48;
+            --base-color-system--success-light-green: #57ff53;
+            --base-color-system--success-green-light: #ecfdf3;
+            --base-color-system--error-red: #b42318;
+            --base-color-system--error-red-light: #fef3f2;
+            --radius--radius-large: 1.5rem;
+            --background-color--background-success: var(--base-color-system--success-green-light);
+            --background-color--background-error: var(--base-color-system--error-red-light);
+            --border-color--border-alternate: var(--base-color-brand--off-white);
+            --text-color--text-success: var(--base-color-system--success-green);
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: hidden;
+            color: var(--base-color-brand--off-white);
+            font-family: Inter, sans-serif;
+            width: 100vw;
+            height: 100vh;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(to top left, var(--background-color--dark-green), var(--base-color-brand--dark), var(--background-color--dark-blue));
+            background-size: 120% 120%;
+            animation: gradientBreathing 5s infinite ease-in-out alternate;
+        }
+
+        @keyframes gradientBreathing {
+            0% {
+                background-position: 50% 50%;
+            }
+
+            50% {
+                background-position: 100% 0%;
+            }
+
+            100% {
+                background-position: 50% 50%;
+            }
+        }
+
+        .info-panel-right {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            text-align: right;
+            z-index: 1;
+            color: var(--base-color-brand--off-white);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .info-panel-left {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            text-align: left;
+            z-index: 1;
+            align-items: center;
+            justify-content: space-around;
+            padding: .5rem;
+            flex-direction: column;
+            width: auto;
+            /* Adjusts dynamically based on content */
+            border-radius: var(--radius--radius-large);
+            border: 0px solid var(--base-color-neutral--neutral-darker);
+        }
+
+        .central-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            min-width: 600px;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            text-align: -webkit-center;
+        }
+
+        p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .user-icon {
+            color: var(--base-color-brand--blue);
+        }
+
+        .heading {
+            color: var(--webfuse-white);
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        .blue {
+            color: var(--base-color-brand--blue);
+        }
+
+        .sub-heading {
+            color: var(--webfuse-white);
+            font-size: .9rem;
+            margin: 0%;
+            opacity: 70%;
+            font-weight: lighter;
+        }
+
+        .section-break {
+            text-align: center;
+            opacity: 100%;
+            width: 100%;
+        }
+
+        .line {
+            border: 0;
+            border-top: 1px solid var(--base-color-brand--off-white);
+            margin-bottom: 1rem;
+            width: 100%;
+            opacity: 5%;
+        }
+
+        .line-2 {
+            border: 0;
+            border-top: 1px solid var(--base-color-brand--off-white);
+            margin-bottom: 1rem;
+            width: 100%;
+            opacity: 2%;
+        }
+
+        .bookmarks-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: .5rem;
+            justify-items: center;
+            align-items: start;
+            padding: 1rem 0;
+        }
+
+        .bookmark {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--base-color-neutral--neutral-lighter);
+            opacity: 0.8;
+        }
+
+        .bookmark-icon {
+            width: auto;
+            height: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            gap: 10px;
+            opacity: 95%;
+            align-items: stretch;
+        }
+
+        input[type="text"] {
+            background-color: var(--base-color-brand--off-white);
+            color: var(--base-color-brand--dark);
+            border: none;
+            border-radius: 15px;
+            width: 100%;
+            min-width: 200px;
+            height: 2.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--base-color-neutral--neutral);
+            font-size: 1rem;
+            opacity: 0.4;
+            text-align: center;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+        }
+
+        .buttons-container {
+            max-width: 100%;
+            margin-top: 1em;
+        }
+
+        .buttons-1 {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .buttons-1 button {
+            color: var(--webfuse-offwhite);
+            font-size: 1rem;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            padding: .5rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .buttons-1 svg {
+            color: var(--base-color-brand--light-blue);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="info-panel-right">
+        <p id="datetime"></p>
+    </div>
+    <div class="info-panel-left">
+        <svg class="user-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+            fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd"
+                d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                clip-rule="evenodd" />
+        </svg>
+        <p id="participant-count-display">...</p>
+    </div>
+    <div class="central-container">
+        <h1 class="heading">Start Page: <span class="blue" id="tab-owner-sub-heading">...</span></h1>
+        <div class="section-break">
+            <hr class="line">
+        </div>
+        <div class="bookmarks-container">
+            <a class="bookmark" target="_blank" rel="noopener" href="https://help.surfly.com/en/live-help">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/new-product.png?raw=true"
+                    alt="helping-hand">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://workspace.google.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/google-suite.png?raw=true"
+                    alt="google-suite">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://www.notion.so/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/Notion-logo.png?raw=true"
+                    alt="notion">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://miro.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/miro-logo.png?raw=true"
+                    alt="miro">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://chat.openai.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/gpt.png?raw=true"
+                    alt="chatgpt">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://www.shopify.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/shopify.png?raw=true"
+                    alt="shopify">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://buy.stripe.com/test_4gwg0I0uv8VZeac001">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/stripe.png?raw=true"
+                    alt="stripe">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://www.youtube.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/youtube.png?raw=true"
+                    alt="youtube">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://www.salesforce.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/salesforce.png?raw=true"
+                    alt="salesforce">
+            </a>
+            <a class="bookmark" target="_blank" rel="noopener" href="https://asana.com/">
+                <img class="bookmark-icon"
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/asana.png?raw=true"
+                    alt="asana">
+            </a>
+        </div>
+        <div class="search-container">
+            <form onsubmit="goTo();return false">
+                <input type="text" placeholder="Enter a URL or search the web" autofocus id="urlInput" />
+            </form>
+        </div>
+        <div class="buttons-container">
+            <div class="buttons-1">
+                <button id="startScreensharing">Share Screen</button>
+                <button id="shareFile">Share Local File</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onReady(fn) {
+            if (document.readyState !== 'loading') {
+                fn();
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+
+        onReady(function () {
+            console.log("ready");
+
+            //Screenshare button
+            document.getElementById("startScreensharing")
+                .addEventListener("click", () => browser.webfuseSession.startScreensharing());
+
+            //Fileshare button
+            document.getElementById("shareFile")
+                .addEventListener("click", () => {
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = "*/*";
+                    input.onchange = e => browser.webfuseSession.apiRequest({
+                        cmd: "upload_file",
+                        file: e.target.files[0]
+                    });
+                    input.click();
+                });
+
+            // session-participant listener
+            browser.webfuseSession.onMessage.addListener(data => {
+                // update participant count
+                if (data.participants) {
+                    const count = data.participants.filter(p => p.online).length;
+                    document.getElementById("participant-count-display").innerText = count;
+
+                    // find self participant and update heading
+                    const selfParticipant = data.participants.find(p => p.self);
+                    if (selfParticipant && selfParticipant.name) {
+                        document.getElementById("tab-owner-sub-heading").innerText = selfParticipant.name;
+                    }
+                }
+            });
+
+            // periodic updates
+            function updateDateTime() {
+                const now = new Date();
+                document.getElementById('datetime').innerHTML = `
+              <span style="font-size:1.5rem;opacity:0.7;">${now.toDateString()}</span><br>
+              <span style="font-size:1.5rem;opacity:1;">${now.toLocaleTimeString()}</span>`;
+            }
+            function updateParticipantCount() {
+                browser.webfuseSession.apiRequest({ cmd: "get_session_participants" });
+            }
+
+            updateDateTime();
+            updateParticipantCount();
+            setInterval(updateDateTime, 1000);
+            setInterval(updateParticipantCount, 5000);
+        });
+
+        //URL bar: bing search input
+        function goTo(event) {
+            let url = document.getElementById("urlInput").value;
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = `https://www.bing.com/search?q=${url}`;
+            }
+            browser.webfuseSession.apiRequest({
+                cmd: "relocate",
+                url: url,
+                newTab: false,
+            });
+
+        }
+
+    </script>
+</body>
+
+</html>
