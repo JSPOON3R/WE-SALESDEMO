@@ -10,7 +10,4 @@ popup, content, background, startpage
 Add your name with a capital letter to the extension variable
 
 ## Required Apps
-Screenshare 
-File Sharing
-Masking
-Video
+Screenshare, File Sharing, Masking, Video
