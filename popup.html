@@ -97,16 +97,16 @@
     }
 
     input[type="text"] {
-    align-self: center;
-    height: 1em;
-    width: 100%;
-    padding: 0.3rem .5rem;
-    border: none;
-    border-radius: 4px;
-    font-size: .8rem;
-    outline: 1px solid  var(--bg-blue);
-    background-color: transparent;
-    color: #f7f7f7;
+      align-self: center;
+      height: 1em;
+      width: 100%;
+      padding: 0.3rem .5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: .8rem;
+      outline: 1px solid var(--bg-blue);
+      background-color: transparent;
+      color: #f7f7f7;
     }
 
     input::placeholder {
@@ -154,7 +154,7 @@
 
 <body>
   <div id="container">
-          <input type="text" placeholder="Enter URL..." id="urlInput" />
+    <input type="text" placeholder="Enter URL..." id="urlInput" />
     <div class="topBar">
       <button class="top-button" id="XYToggle">Toggle XY</button>
       <button class="top-button" id="showTranscript">Toggle Transcript</button>
@@ -162,12 +162,14 @@
     <div class="topBar">
       <button class="top-button" id="generateLinkBtn">Generate Magic Link</button>
       <button class="top-button" id="magic-link-display">Copy</button>
-    </div>              
+    </div>
 
     <div id="logContainer"></div>
   </div>
 
   <script>
+    //Use to prevent get_session_info message from generating magic link if it comes from somewhere else
+    let generateMagicLink = false;
     let backgroundScriptMessage = {
       action: "magic-link-request",
       newTabLink: "https://demo.wpeverest.com/user-registration/health-insurance-application-form/",
@@ -177,11 +179,48 @@
     };
     let magicLink = "";
 
+
+    //Client Index logic for opening tabs Start
+    let selfParticipant;
+
+    //Listen for session info messages for get self index (already called periodically by start page)
+    browser.webfuseSession.onMessage.addListener(data => {
+      if (data.participants) {
+        // find self participant
+        selfParticipant = data.participants.find(p => p.self);
+        if (selfParticipant) {
+          console.log(selfParticipant.name, " has index ", selfParticipant.client_index);
+        }
+      }
+    });
+
+    //wait for message from startpage to open a new tab for the correct participant
+    browser.webfuseSession.onMessage.addListener((message) => {
+      if (message.action === "open_new_tab") {
+        console.log(message);
+        console.log("Open tab request for Particioant ", selfParticipant.client_index, ". Control index is:", message.index);
+        if (selfParticipant.client_index === message.index) {
+          browser.webfuseSession.openTab(message.url);
+          console.log("Tab opened for participant ", message.index);
+        }
+      } else if (message.action === "share_screen") {
+        console.log(message, message.index, selfParticipant.client_index);
+        console.log("Screenshare request for Particioant ", selfParticipant.client_index, ". Control index is:", message.index);
+        if (selfParticipant.client_index === message.index) {
+          browser.webfuseSession.startScreensharing();
+          console.log("Screen share triggered for participant ", message.index);
+        }
+      }
+    });
+
+    //Client Index logic for opening tabs End
+
     async function getSession() {
-      chrome.webfuseSession.getSessionInfo();
+      browser.webfuseSession.getSessionInfo();
     }
 
     document.getElementById("generateLinkBtn").addEventListener("click", () => {
+      generateMagicLink = true;
       getSession();
       backgroundScriptMessage.newTabLink = "https://demo.wpeverest.com/user-registration/health-insurance-application-form/";
       const inputElement = document.getElementById("urlInput");
@@ -196,14 +235,15 @@
       }
     });
 
-    chrome.webfuseSession.onMessage.addListener(message => {
-      if (message.msg === "get_session_info") {
+    browser.webfuseSession.onMessage.addListener(message => {
+      if (message.msg === "get_session_info" && generateMagicLink === true) {
         console.log("sessionInfo: ", message.sessionInfo);
         backgroundScriptMessage.sessionId = message.sessionInfo.sessionId;
         backgroundScriptMessage.spaceId = message.sessionInfo.space.id;
         backgroundScriptMessage.spaceUrl = message.sessionInfo.space.link;
-        browser.runtime.sendMessage(backgroundScriptMessage);
+        browser.webfuseSession.sendMessage(backgroundScriptMessage);
         console.log("message sent to background script");
+        generateMagicLink = false;
       }
     });
 
@@ -226,9 +266,7 @@
       document.body.removeChild(textarea);
     }
 
-    browser.runtime.onMessage.addListener((message) => {
-      console.log("from extension... ", message);
-
+    browser.webfuseSession.onMessage.addListener((message) => {
       if (message.action === "magic-link-ready") {
         magicLink = message.magicLink.link;
         console.log("Magic link from background script: ", magicLink);
@@ -257,7 +295,7 @@
 
     browser.webfuseSession.onMessage.addListener((msg) => {
       if (msg.event_type !== 'user_activity' && msg.msg !== "get_session_participants") {
-        console.log('popup_event_detected:', msg);
+
         addLogEntry(msg);
       }
     });
@@ -358,7 +396,7 @@
 
       function init() {
         let handlerAdded = false;
-        chrome.webfuseSession.onMessage.addListener(message => {
+        browser.webfuseSession.onMessage.addListener(message => {
           if (message?.msg === 'get_session_participants' && !handlerAdded) {
             const me = message.participants.find(participant => !!participant.self);
             handlerAdded = true;
@@ -368,7 +406,7 @@
           }
         });
 
-        chrome.webfuseSession.apiRequest({ cmd: 'get_session_participants' });
+        browser.webfuseSession.apiRequest({ cmd: 'get_session_participants' });
       }
 
       setTimeout(init, 1000);

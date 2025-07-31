@@ -10,11 +10,10 @@ async function generateMagicLink() {
 
     const data = await res.json();
     console.log(data); 
-    browser.runtime.sendMessage({action: "magic-link-ready", magicLink: data});
+    browser.webfuseSession.sendMessage({action: "magic-link-ready", magicLink: data});
 }
 
-browser.runtime.onMessage.addListener((message) => {
-    console.log("from extension... ", message);
+browser.webfuseSession.onMessage.addListener((message) => {
     if (message.action === "magic-link-request") {
         magicLinkInput.newTab = message.newTabLink;
         magicLinkInput.sessionId = message.sessionId;

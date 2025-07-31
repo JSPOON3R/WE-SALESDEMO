@@ -132,7 +132,18 @@
 
         p {
             margin: 0;
+            opacity: .5;
             text-align: center;
+            font-size: .5em;
+            color: var(--base-color-brand--light-blue);
+        }
+
+        .participant-display {
+            margin: 0;
+            opacity: 1;
+            text-align: center;
+            font-size: 1em;
+            color: var(--base-color-brand--off-white);
         }
 
         .user-icon {
@@ -196,6 +207,7 @@
             text-decoration: none;
             color: var(--base-color-neutral--neutral-lighter);
             opacity: 0.8;
+            cursor: pointer;
         }
 
         .bookmark-icon {
@@ -278,7 +290,7 @@
                 d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
                 clip-rule="evenodd" />
         </svg>
-        <p id="participant-count-display">...</p>
+        <p class="participant-display" id="participant-count-display">...</p>
     </div>
     <div class="central-container">
         <h1 class="heading">Start Page: <span class="blue" id="tab-owner-sub-heading">...</span></h1>
@@ -286,55 +298,60 @@
             <hr class="line">
         </div>
         <div class="bookmarks-container">
-            <a class="bookmark" target="_blank" rel="noopener" href="https://help.surfly.com/en/live-help">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://help.surfly.com/en/live-help">
                 <img class="bookmark-icon"
-                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/new-product.png?raw=true"
-                    alt="helping-hand">
+                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/webfuse_logo_small.png?raw=true"
+                    alt="Webfuse">
+                <p>Docs</p>
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://workspace.google.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://workspace.google.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/google-suite.png?raw=true"
                     alt="google-suite">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://www.notion.so/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://www.notion.so/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/Notion-logo.png?raw=true"
                     alt="notion">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://miro.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://miro.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/miro-logo.png?raw=true"
                     alt="miro">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://chat.openai.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://chat.openai.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/gpt.png?raw=true"
                     alt="chatgpt">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://www.shopify.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://www.shopify.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/shopify.png?raw=true"
                     alt="shopify">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://buy.stripe.com/test_4gwg0I0uv8VZeac001">
+            <a class="bookmark" target="_blank" rel="noopener"
+                data-url="https://buy.stripe.com/test_4gwg0I0uv8VZeac001">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/stripe.png?raw=true"
                     alt="stripe">
+                <p>Masking</p>
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://www.youtube.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://www.youtube.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/youtube.png?raw=true"
                     alt="youtube">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://www.salesforce.com/">
+            <a class="bookmark" target="_blank" rel="noopener" data-url="https://www.salesforce.com/">
                 <img class="bookmark-icon"
                     src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/salesforce.png?raw=true"
                     alt="salesforce">
             </a>
-            <a class="bookmark" target="_blank" rel="noopener" href="https://asana.com/">
+            <a class="bookmark" target="_blank" rel="noopener"
+                data-url="https://progressier.com/pwa-capabilities/localstorage-demo">
                 <img class="bookmark-icon"
-                    src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/asana.png?raw=true"
-                    alt="asana">
+                    src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/322c63d8793306c3f07d72243a60d75de295837c/resources-common/icons/1683593523538logo-full-gradient.svg"
+                    alt="LocalStorageDemo">
+                <p>Upload</p>
             </a>
         </div>
         <div class="search-container">
@@ -351,6 +368,10 @@
     </div>
 
     <script>
+
+        let selfParticipant;
+        let controlParticipant;
+
         function onReady(fn) {
             if (document.readyState !== 'loading') {
                 fn();
@@ -362,9 +383,19 @@
         onReady(function () {
             console.log("ready");
 
-            //Screenshare button
-            document.getElementById("startScreensharing")
-                .addEventListener("click", () => browser.webfuseSession.startScreensharing());
+            // Screenshare button
+            document.getElementById("startScreensharing").addEventListener("click", () => {
+                if (controlParticipant !== selfParticipant.client_index) {
+                    //handle opening new tab for the in control user
+                    const message = {action: "share_screen", index: controlParticipant};
+                    //send to other participants
+                    browser.webfuseSession.broadcastMessage(message);
+                    console.log("broadcasting message to all participant extensions: ", message);
+                } else {
+                    console.log("Tab owner confirmed. Screenshare starting...")
+                    browser.webfuseSession.startScreensharing();
+                }
+            });
 
             //Fileshare button
             document.getElementById("shareFile")
@@ -380,16 +411,42 @@
                 });
 
             // session-participant listener
+            console.log("TESTT");
             browser.webfuseSession.onMessage.addListener(data => {
                 // update participant count
                 if (data.participants) {
+                    console.log("data.participant message");
                     const count = data.participants.filter(p => p.online).length;
                     document.getElementById("participant-count-display").innerText = count;
 
                     // find self participant and update heading
-                    const selfParticipant = data.participants.find(p => p.self);
+                    selfParticipant = data.participants.find(p => p.self);
                     if (selfParticipant && selfParticipant.name) {
                         document.getElementById("tab-owner-sub-heading").innerText = selfParticipant.name;
+                    }
+                }
+            });
+
+            //get tab info
+            function updateControlIndex() {
+                browser.webfuseSession.getTabs();
+            }
+            //trigger on load:
+            updateControlIndex();
+            //and when control changes
+            browser.webfuseSession.onMessage.addListener(data => {
+                if (data.event_type === "tab_control") {
+                    updateControlIndex();
+                }
+            });
+
+            //update control participant listner
+            browser.webfuseSession.onMessage.addListener(data => {
+                if (data.tabs) {
+                    const activeTab = data.tabs?.find(tab => tab.active);
+                    if (activeTab) {
+                        controlParticipant = activeTab.control_index;
+                        console.log("Control participant updated to :", controlParticipant, " in newtab.html");
                     }
                 }
             });
@@ -401,14 +458,15 @@
               <span style="font-size:1.5rem;opacity:0.7;">${now.toDateString()}</span><br>
               <span style="font-size:1.5rem;opacity:1;">${now.toLocaleTimeString()}</span>`;
             }
-            function updateParticipantCount() {
-                browser.webfuseSession.apiRequest({ cmd: "get_session_participants" });
+            function updateDisplayInfo() {
+                browser.webfuseSession.getSessionInfo();
+                browser.webfuseSession.apiRequest({ cmd: 'get_session_participants' });
             }
 
             updateDateTime();
-            updateParticipantCount();
+            updateDisplayInfo();
             setInterval(updateDateTime, 1000);
-            setInterval(updateParticipantCount, 5000);
+            setInterval(updateDisplayInfo, 5000);
         });
 
         //URL bar: bing search input
@@ -422,8 +480,30 @@
                 url: url,
                 newTab: false,
             });
-
         }
+
+        //handle bookmark clicks
+        document.querySelectorAll('.bookmark').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault(); // prevent default link behavior
+                const url = el.getAttribute('data-url');
+                if (url) {
+                    if (controlParticipant !== selfParticipant.client_index) {
+                        //handle opening new tab for the in control user
+                        message = { action: "open_new_tab", url: url, index: controlParticipant };
+
+                        //send to other participants
+                        browser.webfuseSession.broadcastMessage(message);
+                        console.log("broadcasting message to all participant extensions: ", message);
+                    } else {
+                        browser.webfuseSession.openTab(url);
+                    }
+                }
+                else {
+                    console.warn("Error opening bookmarks. Please check extension code");
+                }
+            });
+        });
 
     </script>
 </body>

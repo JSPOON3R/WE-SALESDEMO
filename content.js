@@ -2,7 +2,7 @@ let XYDisplay = false;
 let coords = null; // Reference to the overlay element
 let mouseMoveHandler = null; // To store the event listener so we can remove it later
 
-browser.runtime.onMessage.addListener((message) => {
+browser.webfuseSession.onMessage.addListener((message) => {
   console.log("from extension... ", message);
   if (message.action === "toggleXY") {
     XYDisplay = !XYDisplay;
@@ -137,7 +137,7 @@ function printTranscript() {
   document.head.appendChild(style);
 
   // Listen for transcript messages
-  browser.runtime.onMessage.addListener((message) => {
+  browser.webfuseSession.onMessage.addListener((message) => {
     if (message.action !== "transcript" || !message.payload?.text) return;
 
     const text = message.payload.text.trim();
